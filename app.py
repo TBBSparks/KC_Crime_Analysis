@@ -9,7 +9,7 @@ import json
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///KC_Crime_Density.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///KC_Crime_Density.db"
 db = SQLAlchemy(app)
 
 Base = automap_base()
