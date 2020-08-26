@@ -42,7 +42,7 @@ a {
 
 #console {
   position: relative;
-  width: 350px;
+  width: 400px;
   margin: 10px;
   padding: 10px 20px;
   background-color: white;
@@ -87,12 +87,12 @@ a {
       </div>
       <div class='row labels'>
         <div class='label'>1</div>
-        <div class='label'>50</div>
         <div class='label'>100</div>
         <div class='label'>200</div>
         <div class='label'>300</div>
         <div class='label'>400</div>
-        <div class='label'>500+</div>
+        <div class='label'>500</div>
+        <div class='label'>1000+</div>
       </div>
 
       <div class='session' id='sliderbar'>
@@ -112,12 +112,14 @@ a {
       <div class='session'>
         <h2>Type of crime</h2>
         <div class='row' id='filters'>
-          <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-          <label for='all'>All</label>
+          <input id='Violent' type='radio' name='toggle' value='Violent' checked='checked'>
+          <label for='Violent'>Violent</label>
           <input id='theft' type='radio' name='toggle' value='theft'>
           <label for='theft'>Theft</label>
           <input id='sexoffense' type='radio' name='toggle' value='sexoffense'>
           <label for='sexoffense'>Sex Offense</label>
+          <input id='drug' type='radio' name='toggle' value='drug' checked='checked'>
+          <label for='Drug'>Drug</label>
           <input id='other' type='radio' name='toggle' value='other' checked='checked'>
           <label for='other'>Other</label>
         </div>
@@ -166,12 +168,12 @@ map.on('load', function() {
         ['linear'],
         ['number', ['get', 'CountPerType']],
         1, '#0011FF',
-        50, '#00DEFF',
-        100, '#00FF09',
-        200, '#FFF700',
-        300, '#FF8000',
-        400, '#FF0000',
-        500, '#000000'
+        100, '#00DEFF',
+        200, '#00FF09',
+        300, '#FFF700',
+        400, '#FF8000',
+        500, '#FF0000',
+        1000, '#000000'
       ],
       'circle-opacity': 0.8
     }
@@ -195,13 +197,14 @@ map.on('load', function() {
   document.getElementById('filters').addEventListener('change', function(e) {
       var crimetype = e.target.value;
       // update the map filter
-      if (crimetype === 'all') {
-
-        filtercrime = ['!=', ['string', ['get', 'all']], 'placeholder'];
+      if (crimetype === 'Violent') {
+        filtercrime = ['match', ['get', 'TYPE'], ['Violent'], true, false];
       } else if (crimetype === 'theft') {
         filtercrime = ['match', ['get', 'TYPE'], ['theft'], true, false];
       } else if (crimetype === 'sexoffense') {
         filtercrime = ['match', ['get', 'TYPE'], ['sexoffense'], true, false];
+      } else if (crimetype === 'drug') {
+        filtercrime = ['match', ['get', 'TYPE'], ['drug'], true, false];
       } else if (crimetype === 'other') {
         filtercrime = ['match', ['get', 'TYPE'], ['other'], true, false];
       } else {
