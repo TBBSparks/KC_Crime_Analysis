@@ -196,13 +196,14 @@ map.on('load', function() {
       var crimetype = e.target.value;
       // update the map filter
       if (crimetype === 'all') {
+
         filtercrime = ['!=', ['string', ['get', 'all']], 'placeholder'];
       } else if (crimetype === 'theft') {
-        filtercrime = ['match', ['get', 'TYPE'], ['theft'], true];
+        filtercrime = ['match', ['get', 'TYPE'], ['theft'], true, false];
       } else if (crimetype === 'sexoffense') {
-        filtercrime = ['match', ['get', 'TYPE'], ['sexoffense'], true];
+        filtercrime = ['match', ['get', 'TYPE'], ['sexoffense'], true, false];
       } else if (crimetype === 'other') {
-        filtercrime = ['match', ['get', 'TYPE'], ['other'], true];
+        filtercrime = ['match', ['get', 'TYPE'], ['other'], true, false];
       } else {
         filtercrime = map.setFilter('population', ['==', ['number', ['get', 'CountPerType']], crimetype]);
       }
