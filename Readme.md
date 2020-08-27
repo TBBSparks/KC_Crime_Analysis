@@ -1,11 +1,10 @@
-#Kansas City Crime Data Analysis by Zip Code
+# Kansas City Crime Data Analysis by Zip Code
 Using crime data from the sources listed below, we wanted to show the crime rates broken down by zip code. 
 
-
-##Data Visualization Artists:
+## Data Visualization Artists:
 Tina Sparks, Sarah Martin, Thomas Lippoli, Jai Dayal, Lesley Chubick
 
-#Data Sources
+## Data Sources
 
 Zip Codes: http://zipatlas.com/us/mo/kansas-city/zip-code-comparison/population-density.htm
 
