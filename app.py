@@ -35,7 +35,7 @@ def data():
 @app.route("/API_endpoint", methods=['GET'])
 def index():
 
-    data = [("Report_No","Report_Date","zip","Offense","Description","IBRS","Race","Sex","Age")]
+    data = [("Report_No","Report_Date","zip","Offense","Description","Race","Sex","Age")]
     conn = sqlite3.connect('KC_Crime_Density.db')
 
     cursor = conn.execute('SELECT * FROM full_crime;')
