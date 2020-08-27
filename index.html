@@ -160,15 +160,7 @@
                     // update the map
                     map.setFilter('population', ['==', ['number', ['get', 'YEAR']], year]);
 
-                    // converting 0-23 hour to AMPM format
-                    //var ampm = hour >= 12 ? 'PM' : 'AM';
-                    //var hour12 = hour % 12 ? hour % 12 : 12;
-
-                    // update text in the UI
-                    //if (year === '2014') 
-                    //document.getElementById('active-year').innerText = 'All';
-                    //} else
-                    //document.getElementById('active-year').innerText = year;
+                    
                   });
 
                   document.getElementById('filters').addEventListener('change', function(e) {
