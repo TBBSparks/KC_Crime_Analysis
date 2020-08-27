@@ -21,8 +21,8 @@ Zip Codes: http://zipatlas.com/us/mo/kansas-city/zip-code-comparison/population-
 2020 Crime Data: https://data.kcmo.org/Crime/KCPD-Crime-Data-2020/vsgj-uufz
 
 
-# To see how we converted the data into a visual story for you to interact with, please visit:
-# https://tbbsparks.github.io/KC_Crime_Analysis/
+### To see how we converted the data into a visual story for you to interact with, please visit:
+## https://tbbsparks.github.io/KC_Crime_Analysis/
 
 
 *Interested in doing something similar?  Excellent map tutorial can be found here: https://docs.mapbox.com/help/tutorials/show-changes-over-time/*
