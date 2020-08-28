@@ -11,6 +11,9 @@ import json
 # Create Flask app
 app = Flask(__name__)
 
+# Suppress depreciation warning
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 # Connect to sqlite database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///KC_Crime_Density.db"
 db = SQLAlchemy(app)
@@ -20,8 +23,7 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # # Put table into variables
-# Crime = Base.classes.full_crime
-# Population = Base.classes.population
+Crime = Base.classes.full_crime
 
 @app.route("/")
 def home():
