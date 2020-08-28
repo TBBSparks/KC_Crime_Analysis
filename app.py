@@ -8,22 +8,16 @@ from flask import Flask, render_template, jsonify, after_this_request
 import pandas as pd
 import json
 
-# Create Flask app
-app = Flask(__name__)
-
-# Suppress depreciation warning
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Connect to sqlite database
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///KC_Crime_Density.db"
-db = SQLAlchemy(app)
+engine = create_engine("sqlite:///KC_Crime_Density.db")
 
 Base = automap_base()
 
-Base.prepare(db.engine, reflect=True)
+Base.prepare(engine, reflect = True)
 
-# # Put table into variables
 Crime = Base.classes.full_crime
+Population = Base.classes.population
+
+app = Flask(__name__)
 
 @app.route("/")
 def home():
@@ -41,17 +35,53 @@ def neighborhoodTrends():
 def data():
     return render_template('/data.html')    
 
-@app.route("/API_endpoint", methods=['GET'])
-def index():
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+# # Create Flask app
+# app = Flask(__name__)
 
-    data = [("Report_No","Report_Date","zip","Offense","Description","Race","Sex","Age")]
-    conn = sqlite3.connect('KC_Crime_Density.db')
+# # Suppress depreciation warning
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    cursor = conn.execute('SELECT * FROM full_crime;')
-    data.append = cursor.fetchall()
-    print(data)
+# # Connect to sqlite database
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///KC_Crime_Density.db"
+# db = SQLAlchemy(app)
 
-    return jsonify(data)
+# Base = automap_base()
 
-if __name__ == "__main__":
-    app.run()
+# Base.prepare(db.engine, reflect=True)
+
+# # # Put table into variables
+# Crime = Base.classes.full_crime
+
+# @app.route("/")
+# def home():
+#     return render_template('index.html')
+
+# @app.route("/yearly_comparison")
+# def yearlyTrends():
+#     return render_template('/yearly_comparison.html')
+
+# @app.route("/zip_comparison")
+# def neighborhoodTrends():
+#     return render_template('/zip_comparison.html')
+
+# @app.route("/data")
+# def data():
+#     return render_template('/data.html')    
+
+# @app.route("/API_endpoint", methods=['GET'])
+# def index():
+
+#     data = [("Report_No","Report_Date","zip","Offense","Description","Race","Sex","Age")]
+#     conn = sqlite3.connect('KC_Crime_Density.db')
+
+#     cursor = conn.execute('SELECT * FROM full_crime;')
+#     data.append = cursor.fetchall()
+#     print(data)
+
+#     return jsonify(data)
+
+# if __name__ == "__main__":
+#     app.run()
