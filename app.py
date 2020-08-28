@@ -4,17 +4,24 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template, jsonify, after_this_request
+import pandas as pd
 import json
 
+# Create Flask app
 app = Flask(__name__)
 
+# Connect to sqlite database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///KC_Crime_Density.db"
 db = SQLAlchemy(app)
 
 Base = automap_base()
 
 Base.prepare(db.engine, reflect=True)
+
+# # Put table into variables
+# Crime = Base.classes.full_crime
+# Population = Base.classes.population
 
 @app.route("/")
 def home():
