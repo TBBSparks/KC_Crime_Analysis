@@ -13,7 +13,7 @@
         <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
 
         <!--CSS link-->
-        <link rel="stylesheet" type="text/css" href="static/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     </head>
       
     <header>
@@ -29,13 +29,13 @@
                   <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="templates/wanted.html">Kansas City Wanted</a>
+                  <a class="nav-link" href="wanted.html">Kansas City Wanted</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="templates/zip_comparison.html">Neighborhood</a>
+                  <a class="nav-link" href="zip_comparison.html">Neighborhood</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="templates/data.html">Data</a>
+                  <a class="nav-link" href="data.html">Data</a>
                 </li>
               </ul>
             </div>
@@ -47,13 +47,13 @@
         <h1 class="display-4"><strong>Kansas City Crime Analysis</strong></h1>
         <p class="lead"><p>Five Kansas City and data enthusiasts had a simple question - does population density have a correlation with crime rate? That is what began this endeavor to examine Kansas City's crime data from 2015-2020 and the 2010 census population data. This application aims to provide brief insight into a few key crime factors, including Kansas City historical crime trends, crime heatmap, and specific demographic information.</p>
         <b></b>
-        <p>Data used to create the visualizations on this application can be found on the data tab, <a href="templates/data.html">here</a>.</p>
+        <p>Data used to create the visualizations on this application can be found on the data tab, <a href="data.html">here</a>.</p>
       </div>
 
       <div class="container">
         <section id="disclaimer">
         <div class="row">
-          <p><strong>For a full screen map, <a href="templates/heat_map.html">click here</a>.</strong></p><br>
+          <p><strong>For a full screen map, <a href="heat_map.html">click here</a>.</strong></p><br>
           <br><br>
         </div>
         </section>
@@ -129,7 +129,7 @@
                     type: 'circle',
                     source: {
                       type: 'geojson',
-                      data: './data/KC_Crime.geojson' // replace this with the url of your own geojson
+                      data: 'KC_Crime.geojson' // replace this with the url of your own geojson
                     },
                     paint: {
                       'circle-radius': [
@@ -185,8 +185,6 @@
                 </script>
               </div>
         
-
-
       <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
       <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
       <script src="https://d3js.org/d3.v5.min.js"></script>

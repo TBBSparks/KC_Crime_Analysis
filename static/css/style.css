@@ -56,3 +56,13 @@ body {
     display: inline-block;
     text-align: center;
   }
+
+  img {
+    vertical-align: middle;
+    height: 500px;
+    width: 500px;
+    
+  }
+  .border {
+    border-right: 1px solid black;
+  }

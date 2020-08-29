@@ -20,9 +20,9 @@ Base.prepare(db.engine, reflect=True)
 def home():
     return render_template('index.html')
 
-@app.route("/yearly_comparison")
+@app.route("/wanted")
 def yearlyTrends():
-    return render_template('/yearly_comparison.html')
+    return render_template('/wanted.html')
 
 @app.route("/zip_comparison")
 def neighborhoodTrends():
