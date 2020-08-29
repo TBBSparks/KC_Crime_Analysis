@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>KC Crime Analysis</title>
+        
+        <!--Bootstrap links-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+        <!--CSS link-->
+        <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    </head>
+      
+    <header>
+        <!--Navigation bar-->
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #4a7899d0;">
+            <a class="navbar-brand" href="index.html"><strong> </strong></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="templates/data.html">Data</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+    </header>
+
+    <body>
+      <div class="jumbotron" style="background-image: url(https://i.imgur.com/kvVRL6y.jpg); background-size: 500">
+        <h1 class="display-4"><strong>Kansas City Crime Analysis</strong></h1>
+        <p class="lead"><p>Five Kansas City and data enthusiasts had a simple question - does population density have a correlation with crime rate? That is what began this endeavor to examine Kansas City's crime data from 2015-2020 and the 2010 census population data. This application aims to provide brief insight into a few key crime factors, including Kansas City historical crime trends, crime heatmap, and specific demographic information.</p>
+        <b></b>
+        <p>Data used to create the visualizations on this application can be found on the data tab, <a href="templates/data.html">here</a>.</p>
+      </div>
+
+      <div class="container">
+        <section id="disclaimer">
+        <div class="row">
+          <p><strong>For a full screen map, <a href="templates/heat_map.html">click here</a>.</strong></p><br>
+          <br><br>
+        </div>
+        </section>
+      </div>
+
+              <!--HEATMAP CONTAINER AND SCRIPT-->
+              <div class="col-md-12">
+                <div id='map'></div>
+                <div id='console'>
+                  <h1>MO/KS Crime</h1>
+                  <p>Data: <a href='https://www.kcpd.org/crime/crime-mapping/'>MO/KS crime data</a> 2015 - 2020</p>
+
+                    <div class='session'>
+                      <h2>Crime Count</h2>
+                      <div class='row colors'>
+                      </div>
+                      <div class='row labels'>
+                        <div class='label'>1</div>
+                        <div class='label'>100</div>
+                        <div class='label'>200</div>
+                        <div class='label'>300</div>
+                        <div class='label'>400</div>
+                        <div class='label'>500</div>
+                        <div class='label'>1000+</div>
+                      </div>
+
+                      <div class='session' id='sliderbar'>
+                        <h2>Year</h2>
+                        <input id='slider' class='row' type='range' min='2014' max='2020' step='1' value='2014' />
+                      </div>
+                      <div class='row labels'>
+                        <div class='label'>All</div>
+                        <div class='label'>2015</div>
+                        <div class='label'>2016</div>
+                        <div class='label'>2017</div>
+                        <div class='label'>2018</div>
+                        <div class='label'>2019</div>
+                        <div class='label'>2020</div>
+                      </div>
+
+                      <div class='session'>
+                        <h2>Type of crime</h2>
+                        <div class='row' id='filters'>
+                          <input id='Violent' type='radio' name='toggle' value='Violent' checked='checked'>
+                          <label for='Violent'>Violent</label>
+                          <input id='theft' type='radio' name='toggle' value='theft'>
+                          <label for='theft'>Theft</label>
+                          <input id='sexoffense' type='radio' name='toggle' value='sexoffense'>
+                          <label for='sexoffense'>Sex Offense</label>
+                          <input id='drug' type='radio' name='toggle' value='drug' checked='checked'>
+                          <label for='Drug'>Drug</label>
+                          <input id='other' type='radio' name='toggle' value='other' checked='checked'>
+                          <label for='other'>Other</label>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <!--Mapbox access key (plz don't steal, thanks)-->
+                <script>mapboxgl.accessToken = 'pk.eyJ1IjoiYnNwYXJrczExIiwiYSI6ImNrZTRsdjEyZTAyamIyc29hM2ZnZG8yMW4ifQ.OjmXCqmeX3aq15wvXRb6Tg';
+
+                var map = new mapboxgl.Map({
+                  container: 'map', // container element id
+                  style: 'mapbox://styles/mapbox/light-v10',
+                  center: [-94.578331, 39.099724], // initial map center in [lon, lat]
+                  zoom: 12
+                }); </script>
+
+                <script>
+                map.on('load', function() {
+                  map.addLayer({
+                    id: 'population',
+                    type: 'circle',
+                    source: {
+                      type: 'geojson',
+                      data: 'data/KC_Crime.geojson' // replace this with the url of your own geojson
+                    },
+                    paint: {
+                      'circle-radius': [
+                        'interpolate',
+                        ['linear'],
+                        ['number', ['get', 'CountPerType']],
+                        1, 5,
+                        10, 15
+                        
+                      ],
+                      'circle-color': [
+                        'interpolate',
+                        ['linear'],
+                        ['number', ['get', 'CountPerType']],
+                        1, '#0011FF',
+                        100, '#00DEFF',
+                        200, '#00FF09',
+                        300, '#FFF700',
+                        400, '#FF8000',
+                        500, '#FF0000',
+                        1000, '#000000'
+                      ],
+                      'circle-opacity': 0.8
+                    }
+                  });
+                  document.getElementById('slider').addEventListener('input', function(e) {
+                    var year = parseInt(e.target.value);
+                    // update the map
+                    map.setFilter('population', ['==', ['number', ['get', 'YEAR']], year]);
+
+                    
+                  });
+
+                  document.getElementById('filters').addEventListener('change', function(e) {
+                      var crimetype = e.target.value;
+                      // update the map filter
+                      if (crimetype === 'Violent') {
+                        filtercrime = ['match', ['get', 'TYPE'], ['Violent'], true, false];
+                      } else if (crimetype === 'theft') {
+                        filtercrime = ['match', ['get', 'TYPE'], ['theft'], true, false];
+                      } else if (crimetype === 'sexoffense') {
+                        filtercrime = ['match', ['get', 'TYPE'], ['sexoffense'], true, false];
+                      } else if (crimetype === 'drug') {
+                        filtercrime = ['match', ['get', 'TYPE'], ['drug'], true, false];
+                      } else if (crimetype === 'other') {
+                        filtercrime = ['match', ['get', 'TYPE'], ['other'], true, false];
+                      } else {
+                        filtercrime = map.setFilter('population', ['==', ['number', ['get', 'CountPerType']], crimetype]);
+                      }
+                      map.setFilter('population', ['all', filtercrime]);
+                  });
+                });
+                </script>
+              </div>
+              <br><br><br>
+              
+              <center><div class="card" style="width: 80rem;">
+                <img src="https://i.imgur.com/nKJ3pdG.png" class="card-img-top" alt="KC's Most Wanted Scrape">
+                <div class="card-body">
+                  <p class="card-text"><strong>This Plotly bar chart showcases population per zip code in the surrounding Kansas City area. It is powered through a Flask app API Endpoint.</p></strong>
+                </div>
+              </div></center>
+              <br><br><br>
+
+              <center><div class="card" style="width: 50rem; height: 25rem;">
+                <img src="https://i.imgur.com/ouYV5UM.png" class="card-img-top" alt="KC's Most Wanted Scrape">
+                <div class="card-body">
+                  <p class="card-text"><strong>This interactive component on the app is powered by Flask + MongoDB. It provides a real-time scrape of the KCPD's data regarding their most wanted criminals.</p></strong>
+                </div>
+              </div></center>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+      <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+      <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+    </body>
+    </html>
